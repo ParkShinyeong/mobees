@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import logo from "../icon/logo_v1.png";
-import login from "../icon/login_icon.png";
 import profile from "../icon/user_icon.png";
 import posting from "../icon/posting_icon.png";
 import search from "../icon/search_icon.png";
@@ -12,17 +11,17 @@ import Login from "../component/Login";
 
 const HeaderWrapper = styled.div`
   .down_arrow {
-    opacity: ${ props=> props.dropMenu ? 1 : null }; 
+    opacity: ${(props) => (props.dropMenu ? 1 : null)};
   }
-  .login_btn{
+  .login_btn {
     width: 105px;
     height: 40px;
     position: relative;
-    top:-10px;
+    top: -10px;
     left: -23px;
-    background-color: rgb(0,0,0,0.1);
+    background-color: rgb(0, 0, 0, 0.1);
     border-radius: 100px;
-    color:  rgb(0,0,0,0.5);
+    color: rgb(0, 0, 0, 0.5);
     font-weight: 600;
     font-size: 16px;
     text-align: center;
@@ -30,9 +29,8 @@ const HeaderWrapper = styled.div`
     cursor: pointer;
   }
   .login_btn:hover {
-
     background-color: #ffd900;
-    color:#000;
+    color: #000;
   }
 `;
 const Dropdown = styled.div`
@@ -48,15 +46,15 @@ const Dropdown = styled.div`
   color: red;
 
   div {
-    color: rgb(0,0,0,0.6);
-    font-size:16px;
+    color: rgb(0, 0, 0, 0.6);
+    font-size: 16px;
     font-weight: 500;
     line-height: 45px;
-    text-align:center;
+    text-align: center;
   }
-  .dropmenu_menu:hover{
-    background-color: rgb(0,0,0,0.05);
-    color: rgb(0,0,0,0.8);
+  .dropmenu_menu:hover {
+    background-color: rgb(0, 0, 0, 0.05);
+    color: rgb(0, 0, 0, 0.8);
     font-weight: 600;
   }
 `;
@@ -102,16 +100,22 @@ const Header = (props) => {
             ) : null}
             {props.isLogin ? (
               <div className="profile_img">
-                <div className="profile_img_box" onClick={() => {setdropMenu(!dropMenu);}}>
+                <div
+                  className="profile_img_box"
+                  onClick={() => {
+                    setdropMenu(!dropMenu);
+                  }}
+                >
                   <img src={profile} className="profile_btn" />
                   <img src={down_arrow} className="down_arrow" />
                 </div>
-                {dropMenu ? 
+                {dropMenu ? (
                   <Dropdown>
                     <div className="dropmenu_box">
                       <div className="dropmenu_content">
-                        <Link to="/mymovie" style={{ textDecoration: 'none' }}>
-                          <div className="dropmenu_menu"
+                        <Link to="/mymovie" style={{ textDecoration: "none" }}>
+                          <div
+                            className="dropmenu_menu"
                             onClick={() => {
                               setdropMenu(!dropMenu);
                             }}
@@ -119,8 +123,9 @@ const Header = (props) => {
                             My movie
                           </div>
                         </Link>
-                        <Link to="/mypage" style={{ textDecoration: 'none' }}>
-                          <div className="dropmenu_menu"
+                        <Link to="/mypage" style={{ textDecoration: "none" }}>
+                          <div
+                            className="dropmenu_menu"
                             onClick={() => {
                               setdropMenu(!dropMenu);
                             }}
@@ -128,8 +133,9 @@ const Header = (props) => {
                             My page
                           </div>
                         </Link>
-                        <Link to="/" style={{ textDecoration: 'none' }}>
-                          <div className="dropmenu_menu"
+                        <Link to="/" style={{ textDecoration: "none" }}>
+                          <div
+                            className="dropmenu_menu"
                             onClick={() => {
                               setdropMenu(!dropMenu);
                               props.setIsLogin(false);
@@ -140,11 +146,16 @@ const Header = (props) => {
                         </Link>
                       </div>
                     </div>
-                  </Dropdown> : null
-                  }
+                  </Dropdown>
+                ) : null}
               </div>
             ) : (
-              <div className="login" onClick={(e) => { openModal(e);}}>
+              <div
+                className="login"
+                onClick={(e) => {
+                  openModal(e);
+                }}
+              >
                 <div className="login_btn">로그인</div>
                 {/* <img src={login} className="login_btn" /> */}
               </div>
@@ -157,6 +168,7 @@ const Header = (props) => {
           closeModal={closeModal}
           setIsLogin={props.setIsLogin}
           LoginData={props.LoginData}
+          handleResponseSuccess={props.handleResponseSuccess}
         ></Login>
       ) : null}
     </HeaderWrapper>
