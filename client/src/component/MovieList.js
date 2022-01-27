@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link, Route, Switch, useHistory } from "react-router-dom";
 import MoreBtn from "./MoreBtn";
 import like from "../icon/likeAfter_icon2.png";
+import axios from "axios";
 
 const Movie_list_ul = styled.ul`
   max-width: 1024px;
@@ -18,12 +19,12 @@ const Movie_list_ul = styled.ul`
 
   > li {
     width: auto;
-    box-shadow: 2px 3px 4px #ddd;
+    box-shadow: 2px 3px 4px 2px #ddd;
     min-height: 350px;
     border: 1px solid #fff;
     border-radius: 10px;
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     transition: all 0.2s linear;
     &:hover {
       transform: scale(1.1);
@@ -33,12 +34,18 @@ const Movie_list_ul = styled.ul`
 
 const Movie_list_image = styled.div`
   width: auto;
-  min-height: 310px;
+  height: 310px;
   border-radius: 10px;
   cursor: pointer;
   margin: 10px;
   box-sizing: border-box;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
+  background-color: aquamarine;
+  > img {
+    width: 100%;
+    height: 310px;
+    border-radius: 10px;
+  }
   /* transform: scale(0, -1); */
 `;
 const Movie_like = styled.div`
@@ -75,24 +82,55 @@ const Movie_like = styled.div`
   }
 `;
 
-const MovieList = () => {
-  const movie_list = [23, 45, 34, 27, 55, 63, 12, 32];
-  const [list, Setlist] = useState(movie_list);
+const MovieList = ({ movieDetail, setMovieDetail }) => {
+  // const movie_list = [23, 45, 34, 27, 55, 63, 12, 32];
   const history = useHistory();
+  const [list, Setlist] = useState([]);
+
+  const movieList = () => {
+    axios
+      .get("http://localhost:3001/main-movies")
+      .then((movieData) => {
+        console.log(movieData.data.data.mainMovie);
+        Setlist(movieData.data.data.mainMovie);
+        // console.log(list);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    movieList();
+  }, []);
+
+  const detail = (postid) => {
+    axios
+      .get(`http://localhost:3001/main-movies/view/${postid}`)
+      .then((movieData) => {
+        setMovieDetail(movieData.data.data.mainMovieView);
+        console.log(movieData.data.data.mainMovieView);
+      });
+  };
+
   return (
     <>
       <Movie_list_ul>
-        {list.map((el) => (
+        {list.map((el, idx) => (
           <li
+            key={idx}
             onClick={() => {
+              detail(el.id);
               history.push("/detail");
             }}
           >
-            <Movie_list_image></Movie_list_image>
+            <Movie_list_image>
+              <img src={el.image}></img>
+            </Movie_list_image>
             <Movie_like>
               <ul>
                 <img className="like_image" src={like}></img>
-                <li className="like_count">{el}</li>
+                <li className="like_count">{el.total_likes}</li>
               </ul>
             </Movie_like>
           </li>

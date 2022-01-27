@@ -10,7 +10,6 @@ import MyPage from "./pages/MyPage";
 import Posting from "./pages/Posting";
 import SignUp from "./pages/SignUp";
 import { Link, Route, Switch, useHistory } from "react-router-dom";
-import axios from "axios";
 
 const LoginData = {
   email: "YeongYangJae@gmail.com",
@@ -37,46 +36,8 @@ function App() {
     postId: "",
   });
 
-  const isAuthenticated = () => {
-    axios
-      .get("http://localhost:3001/users/info", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        const {
-          user_name,
-          nickname,
-          email,
-          profile_image,
-          phone_number,
-          birthday,
-        } = res.data.data.userInfo;
-        setUserinfo({
-          user_name,
-          nickname,
-          email,
-          profile_image,
-          phone_number,
-          birthday,
-        });
-      })
-      .then((res) => {
-        console.log(userinfo);
-        setIsLogin(true);
-      })
-      .catch((err) => err);
-  };
-
-  const handleResponseSuccess = () => {
-    isAuthenticated();
-  };
-  const handleLogout = () => {
-    axios.post("http://localhost:3001/signout").then((res) => {
-      setUserinfo(null);
-      setIsLogin(false);
-      // history.push('/');
-    });
-  };
+  const [movieDetail, setMovieDetail] = useState({});
+  const [movieList, setMovieList] = useState([]);
 
   return (
     <div className="App">
@@ -84,7 +45,6 @@ function App() {
         isLogin={isLogin}
         setIsLogin={setIsLogin}
         LoginData={LoginData}
-        handleResponseSuccess={handleResponseSuccess}
       ></Header>
       <Switch>
         <Route exact path="/">
@@ -93,6 +53,10 @@ function App() {
             setSelectContent={setSelectContent}
             comments={comments}
             setComments={setComments}
+            movieList={movieList}
+            setMovieList={setMovieList}
+            movieDetail={movieDetail}
+            setMovieDetail={setMovieDetail}
           ></Main>
         </Route>
         <Route path="/detail">
@@ -101,6 +65,8 @@ function App() {
             setSelectContent={setSelectContent}
             comments={comments}
             setComments={setComments}
+            movieDetail={movieDetail}
+            setMovieDetail={setMovieDetail}
           ></MainMovieDetail>
         </Route>
         <Route path="/mymovie">

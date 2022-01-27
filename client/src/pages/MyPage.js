@@ -1,10 +1,10 @@
 import React from "react";
 import Mypage from "../component/Mypage";
 
-const MyPage = ({ LoginData }) => {
+const MyPage = ({ userinfo, jy }) => {
   return (
     <div className="section">
-      <Mypage LoginData={LoginData}></Mypage>
+      <Mypage userinfo={userinfo} jy={jy}></Mypage>
     </div>
   );
 };

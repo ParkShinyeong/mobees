@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Loding from "./Loding";
 import more from "../icon/plus.png";
 import styled from "styled-components";
+import axios from "axios";
 
 const MoreBtnBox = styled.div`
   /* background-color: aqua; */
@@ -17,8 +18,24 @@ const MoreBtnBox = styled.div`
     }
   }
 `;
-const MoreBtn = (props) => {
+const MoreBtn = ({ list, setList }) => {
   const [loading, setLoading] = useState(false);
+  let pageNume = 0;
+
+  const mortMovieList = (num) => {
+    num = list.length / 8;
+
+    axios
+      .get("http://localhost:3001/main-movies", {
+        params: {
+          page: num,
+        },
+      })
+      .then((movieData) => {
+        console.log(movieData);
+        setList([...list, ...movieData.data.data.mainMovie]);
+      });
+  };
 
   return (
     <MoreBtnBox>
@@ -26,8 +43,7 @@ const MoreBtn = (props) => {
         <div
           className="more"
           onClick={() => {
-            props.setList([...props.list, 0, 0, 0, 0, 0, 0, 0, 0]);
-            setLoading(true);
+            mortMovieList(pageNume);
           }}
         >
           <img className="more_btn" src={more} />

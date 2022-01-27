@@ -138,7 +138,7 @@ const Header = (props) => {
                             className="dropmenu_menu"
                             onClick={() => {
                               setdropMenu(!dropMenu);
-                              props.setIsLogin(false);
+                              props.handleLogout();
                             }}
                           >
                             Log out

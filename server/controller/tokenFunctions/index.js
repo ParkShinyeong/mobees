@@ -10,20 +10,30 @@ module.exports = {
   // 쿠키로 access token 전달
   sendAccessToken: (res, accessToken) => {
     return res.cookie("jwt", accessToken, {
+      // httpOnly: true,
+      domain: "localhost",
+      path: "/",
       httpOnly: true,
+      secure: true,
+      sameSite: "None",
     });
   },
   // access token 유효성 확인
   checkAccessToken: (req) => {
     const accessToken = req.cookies.jwt;
+    // console.log("토큰받음");
+    console.log(req);
     if (!accessToken) {
       // 토큰이 없는 경우
+      // console.log("토큰이 없는 경우");
       return null;
     }
     try {
       return verify(accessToken, process.env.ACCESS_SECRET);
     } catch (err) {
       // 토큰이 잘못된 경우
+      console.log("토큰이 잘못된 경우");
+      console.log(err);
       return null;
     }
   },

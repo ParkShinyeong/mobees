@@ -5,6 +5,7 @@ import profile from "../icon/user_icon.png";
 import likeAfter from "../icon/likeAfter_icon2.png";
 import likeBefore from "../icon/likeBefore_icon.png";
 import comment from "../icon/comment.png";
+import axios from "axios";
 
 const Comment = styled.div`
   max-width: 650px;
@@ -189,6 +190,40 @@ const Comment = styled.div`
 `;
 
 const Comments = () => {
+  const writingComment = (key) => {
+    const { comment } = key;
+    console.log("파라미터", key);
+    const postId = 1;
+    axios
+      .post(
+        `http://localhost:3001/posts/comment/${postId}`,
+        { comment },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log("res", res.data.data);
+      })
+      .catch((err) => {
+        alert("포스팅에 실패했습니다.");
+      });
+  };
+
+  const pressLike = () => {
+    const postId = 1;
+    axios
+      .post(`http://localhost:3001/posts/like/${postId}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("res", res.data.data);
+      })
+      .catch((err) => {
+        alert("포스팅에 실패했습니다.");
+      });
+  };
+
   const comment_list = [
     {
       username: "zzok3312",
@@ -218,6 +253,7 @@ const Comments = () => {
             className="likeAfter_icon"
             onClick={() => {
               setLike_countnum(like_countnum + 1);
+              pressLike();
             }}
           />
         ) : (
@@ -226,6 +262,7 @@ const Comments = () => {
             className="likeAfter_icon"
             onClick={() => {
               setLike_countnum(like_countnum + 1);
+              pressLike();
             }}
           />
         )}
@@ -287,6 +324,8 @@ const Comments = () => {
                   setValue("");
                   setComment_countnum(comment_countnum + 1);
                 }
+
+                writingComment({ comment: obj.comment });
               }}
             >
               완 료
