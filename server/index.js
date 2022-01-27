@@ -30,9 +30,9 @@ app.use(
 );
 
 app.use("/", indexRouter);
-// app.get('/', (req, res) => {
-//   res.send("Hello world")
-// })
+app.get("/", (req, res) => {
+  res.send("Hello world");
+});
 
 app.listen(port, () => {
   console.log(
