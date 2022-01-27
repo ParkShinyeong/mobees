@@ -3,7 +3,7 @@ const app = express();
 const indexRouter = require("./routes");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const port = 80;
+const port = 3001;
 const models = require("./models/index.js");
 
 models.sequelize
@@ -35,5 +35,7 @@ app.use("/", indexRouter);
 // })
 
 app.listen(port, () => {
-  console.log(` - -  - - -- -  🐝  🐝  🐝  서버가 ${port}번에서 작동중입니다.  🐝  🐝  🐝 - - - -- - - `);
+  console.log(
+    ` - -  - - -- -  🐝  🐝  🐝  서버가 ${port}번에서 작동중입니다.  🐝  🐝  🐝 - - - -- - - `
+  );
 });
