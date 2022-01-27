@@ -10,7 +10,7 @@ const Comment = styled.div`
   max-width: 650px;
   height: 100%;
   /* background-color: #ddd; */
-  margin: 50px auto 80px auto;
+  margin: 50px auto 100px auto;
 
   > .like_count{
     display: inline-block;
@@ -118,6 +118,7 @@ const Comment = styled.div`
       display: inline-block;
       float: left;
       line-height: 100%;
+
     }
   }
   .comment_make {
@@ -184,90 +185,123 @@ const Comment = styled.div`
   .button_box >div.button_submit:hover {
     background-color: #ffd900;
     color:#000;
-  }
-  
+  } 
 `;
 
 const Comments = () => {
   const comment_list = [
     {
-      username: 'zzok3312',
-      comment: '마지막 회상신에서 처음과 달리 키스신으로 스토리시작될때 진짜 소리지를 뻔...',
-      comment_date: '2022.01.28',
-      img: otherprofile
-    }, 
+      username: "zzok3312",
+      comment:
+        "마지막 회상신에서 처음과 달리 키스신으로 스토리시작될때 진짜 소리지를 뻔...",
+      comment_date: "2022.01.28",
+      img: otherprofile,
+    },
     {
-      username: 'ez0ez0',
-      comment: '인생영화입니다',
-      comment_date: '2022.01.28',
-      img: otherprofile
-    }, 
+      username: "ez0ez0",
+      comment: "인생영화입니다",
+      comment_date: "2022.01.28",
+      img: otherprofile,
+    },
   ];
   let [like_countnum, setLike_countnum] = useState(0);
   let [comment_countnum, setComment_countnum] = useState(2);
   let [list, setList] = useState(comment_list);
-  let [value, setValue] = useState('');
+  let [value, setValue] = useState("");
 
   return (
     <Comment>
-
-      <div className="like_count"> 
-        { like_countnum ?
-          <img src={likeAfter} className="likeAfter_icon" onClick={()=>{setLike_countnum(like_countnum + 1)}}/>
-          : <img src={likeBefore} className="likeAfter_icon" onClick={()=>{setLike_countnum(like_countnum + 1)}}/>
-        }
+      <div className="like_count">
+        {like_countnum ? (
+          <img
+            src={likeAfter}
+            className="likeAfter_icon"
+            onClick={() => {
+              setLike_countnum(like_countnum + 1);
+            }}
+          />
+        ) : (
+          <img
+            src={likeBefore}
+            className="likeAfter_icon"
+            onClick={() => {
+              setLike_countnum(like_countnum + 1);
+            }}
+          />
+        )}
         <span className="like_countnum">{like_countnum}</span>
       </div>
 
-      <div className="comment_count"> 
-        <img src={comment} className="comment_icon"/>
+      <div className="comment_count">
+        <img src={comment} className="comment_icon" />
         <span className="comment_countnum">{comment_countnum}</span>
       </div>
 
-      {list.map((el, idx)=> {
-        return <div className="comments" key={idx}>
-                <img src={el.img} className="otherprofile_img" />
-                <div className="comments_txt">
-                  <p className="username">{el.username}</p>
-                  <p className="comment">{el.comment}</p>
-                  <p className="comment_date">{el.comment_date}</p>
-                </div>
-                <p className="line"></p>
-              </div>       
-        })
-      }
+      {list.map((el, idx) => {
+        return (
+          <div className="comments" key={idx}>
+            <img src={el.img} className="otherprofile_img" />
+            <div className="comments_txt">
+              <p className="username">{el.username}</p>
+              <p className="comment">{el.comment}</p>
+              <p className="comment_date">{el.comment_date}</p>
+            </div>
+            <p className="line"></p>
+          </div>
+        );
+      })}
 
       <div className="comment_make">
         <div className="comments">
           <img src={profile} className="profile_img" />
           <div className="comment_make_txtbox">
             <p className="username">Mobees_username</p>
-            <textarea 
-              id="comment_writing" 
-              maxLength={180} 
-              placeholder="댓글을 작성해주세요" 
-              onChange={(e)=>{setValue(e.target.value)}}
-              value={value}></textarea>
+            <textarea
+              id="comment_writing"
+              maxLength={180}
+              placeholder="댓글을 작성해주세요"
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+              value={value}
+            ></textarea>
           </div>
           <div className="button_box">
-            <div className="button_submit" onClick={()=>{
-              let obj = { };
-              obj.username = 'Mobees_username';
-              obj.comment = value;
-              if(new Date().getMonth() > 9) obj.comment_date = `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`;
-              else obj.comment_date = `${new Date().getFullYear()}-0${new Date().getMonth()+1}-${new Date().getDate()}`;
-              obj.img = profile;
-              if(obj.comment !== '') {
-                setList([...list, obj]);
-                setValue('');
-                setComment_countnum(comment_countnum+1);
-              }
-            }}>완 료</div>
-            <div className="button_cancel" onClick={()=>{setValue('');}}>취 소</div>
+            <div
+              className="button_submit"
+              onClick={() => {
+                let obj = {};
+                obj.username = "Mobees_username";
+                obj.comment = value;
+                if (new Date().getMonth() > 9)
+                  obj.comment_date = `${new Date().getFullYear()}-${
+                    new Date().getMonth() + 1
+                  }-${new Date().getDate()}`;
+                else
+                  obj.comment_date = `${new Date().getFullYear()}-0${
+                    new Date().getMonth() + 1
+                  }-${new Date().getDate()}`;
+                obj.img = profile;
+                if (obj.comment !== "") {
+                  setList([...list, obj]);
+                  setValue("");
+                  setComment_countnum(comment_countnum + 1);
+                }
+              }}
+            >
+              완 료
+            </div>
+            <div
+              className="button_cancel"
+              onClick={() => {
+                setValue("");
+              }}
+            >
+              취 소
+            </div>
           </div>
         </div>
-      </div>  
-
+      </div>
     </Comment>
   );
 };

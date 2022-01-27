@@ -2,7 +2,16 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    let genre = ["horror", "romance", "comic", "action", "fantasy", "SF"];
+    let genre = [
+      "코미디",
+      "로맨스",
+      "드라마",
+      "액션",
+      "스릴러",
+      "판타지",
+      "SF",
+      "호러",
+    ];
     let datas = [];
     for (let i = 0; i < genre.length; i++) {
       let obj = {

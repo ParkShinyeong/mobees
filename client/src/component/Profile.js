@@ -39,7 +39,7 @@ const Profile_ul = styled.div`
   }
 `;
 
-const Profile = ({ LoginData }) => {
+const Profile = ({ LoginData, myMovie_list }) => {
   const history = useHistory();
   return (
     <div className="profile_div">
@@ -76,7 +76,7 @@ const Profile = ({ LoginData }) => {
                 marginTop: "10px",
               }}
             >
-              게시글{" "}
+              게시글 &nbsp;{myMovie_list.length}
             </li>
           </ul>
         </div>

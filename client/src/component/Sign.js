@@ -6,11 +6,11 @@ import logo from "../icon/logo_v1.png";
 const SignUp_div = styled.div`
   width: 1024px;
   height: 540px;
-  margin: 170px auto 75px auto;
+  margin: 180px auto 85px auto;
   position: relative;
   > ul {
     width: 57%;
-    height: 580px;
+    height: 590px;
     margin: 0 auto;
     list-style: none;
     padding-left: 0;
@@ -27,7 +27,7 @@ const SignUp_div = styled.div`
       width: 200px;
       height: 140px;
       /* background-color: #ddd; */
-      margin: 40px auto 33px auto;
+      margin: 40px auto 30px auto;
       box-sizing: border-box;
       border-bottom: 1px solid #8b8585;
       /* border: 1px solid #8b8585; */
@@ -58,7 +58,7 @@ const SignUp_div = styled.div`
       > .loginId {
         width: 252px;
         height: 35px;
-        margin: 10px auto 15px auto;
+        margin: 11px auto 15px auto;
       }
       > .nickname {
         width: 252px;
@@ -80,28 +80,41 @@ const SignUp_div = styled.div`
         height: 35px;
         /* background-color: cadetblue; */
         position: relative;
-        margin: 15px auto;
-
+        margin-top: 15px;
         > .join_btn {
-          width: 75px;
-          height: 30px;
+          width: 95px;
+          height: 38px;
           border-radius: 3px;
           background-color: #2b2828;
           cursor: pointer;
-          line-height: 28px;
-          margin-left: 52px;
+          line-height: 38px;
+          margin-left: 25px;
+          border-radius: 20px;
+          cursor: pointer;
+          background-color: rgb(0, 0, 0, 0.1);
+          color: rgb(0, 0, 0, 0.5);
+          &:hover {
+            background-color: #ffd900;
+            color: #2b2828;
+          }
         }
 
         > .cancle {
-          width: 55px;
-          height: 28px;
-          border-radius: 3px;
-          border: 1px solid #2b2828;
+          width: 95px;
+          height: 37px;
+          /* border: 1px solid #2b2828; */
           cursor: pointer;
-          line-height: 28px;
-          right: 19%;
+          border-radius: 20px;
+          line-height: 37px;
+          right: 7%;
           position: absolute;
+          color: rgb(0, 0, 0, 0.5);
           top: 0;
+          background-color: rgb(0, 0, 0, 0.1);
+          &:hover {
+            background-color: rgb(0, 0, 0, 0.15);
+            color: #2b2828;
+          }
         }
       }
     }
@@ -191,8 +204,8 @@ const Sign = () => {
               <p
                 style={{
                   fontSize: "15px",
-                  fontWeight: "bold",
-                  color: "#FCFCFC",
+                  fontWeight: "500",
+                  // color: "#FCFCFC",
                   textAlign: "center",
                   margin: "0px",
                 }}
@@ -200,12 +213,17 @@ const Sign = () => {
                 가입하기
               </p>
             </div>
-            <div className="cancle">
+            <div
+              className="cancle"
+              onClick={() => {
+                history.push("/");
+              }}
+            >
               <p
                 style={{
                   fontSize: "15px",
                   fontWeight: "500",
-                  color: "#2b2828",
+                  // color: "#2b2828",
                   textAlign: "center",
                   margin: "0px",
                 }}

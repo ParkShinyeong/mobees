@@ -1,17 +1,24 @@
 import React from "react";
-import loading from "../icon/loading.gif"
-import styled from "styled-components";
-const Loding = () => {
+import styled, { keyframes } from "styled-components";
+import loading  from "../icon/loading.png";
 
-  let LoadingImg = styled.img`
-    width: 300px;
-    margin: 0 auto;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, -30%);
-    
-  `;
-  
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const LoadingImg = styled.img`
+  width: 40px;
+  opacity: 1;
+  animation: ${rotate} 3s infinite linear;
+`;
+
+const Loding = () => {  
   return (
     <div className="loding">
       {/* Loding.. */}

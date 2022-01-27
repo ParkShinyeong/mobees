@@ -5,7 +5,7 @@ import profile from "../icon/user_icon.png";
 const Mypage_div = styled.div`
   width: 500px;
   height: 600px;
-  margin: 47px auto;
+  margin: 52px auto;
   position: relative;
   box-sizing: border-box;
   > ul {
