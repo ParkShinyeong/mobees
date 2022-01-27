@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import otherprofile from "../icon/otheruser_icon.png";
 import profile from "../icon/user_icon.png";
 import likeAfter from "../icon/likeAfter_icon2.png";
 import likeBefore from "../icon/likeBefore_icon.png";
 import comment from "../icon/comment.png";
-import axios from "axios";
+import axios from 'axios';
 
 const Comment = styled.div`
   max-width: 650px;
@@ -187,13 +187,64 @@ const Comment = styled.div`
     background-color: #ffd900;
     color:#000;
   } 
-`;
+`
 
-const Comments = () => {
+// const Comments = () => {
+
+//   const writingComment = (key) => {
+//     const { comment } = key;
+//     console.log('파라미터', key)
+//     const postId = 1;
+//     axios
+//     .post(`http://localhost:3001/posts/comment/${postId}`, 
+//       { comment },{
+//         withCredentials: true
+//       })
+//       .then((res) => {
+//         console.log('res', res.data.data);
+//       })
+//       .catch((err) => {
+//         alert('포스팅에 실패했습니다.')
+//       })
+//   };
+
+//   const pressLike = () => {
+//     const postId = 1;
+//     axios
+//     .post(`http://localhost:3001/posts/like/${postId}`, 
+//       {
+//         withCredentials: true
+//       })
+//       .then((res) => {
+//         console.log('res', res.data.data);
+//       })
+//       .catch((err) => {
+//         alert('포스팅에 실패했습니다.')
+//       })
+const Comments = ({
+  movieDetail,
+  comments,
+  postId,
+  setComments,
+  setMovieDetail,
+}) => {
+  const detail = (postid) => {
+    axios
+      .get(`http://localhost:3001/main-movies/view/${postid}`)
+      .then((movieData) => {
+        setMovieDetail(movieData.data.data.mainMovieView);
+        setComments(movieData.data.data.comment);
+        console.log(movieData.data.data.comment);
+      });
+  };
+
+  useEffect(() => {
+    detail(postId);
+  }, []);
+
   const writingComment = (key) => {
     const { comment } = key;
-    console.log("파라미터", key);
-    const postId = 1;
+
     axios
       .post(
         `http://localhost:3001/posts/comment/${postId}`,
@@ -211,17 +262,17 @@ const Comments = () => {
   };
 
   const pressLike = () => {
-    const postId = 1;
-    axios
-      .post(`http://localhost:3001/posts/like/${postId}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log("res", res.data.data);
-      })
-      .catch((err) => {
-        alert("포스팅에 실패했습니다.");
-      });
+    // // const postId = 1;
+    // axios
+    //   .post(`http://localhost:3001/posts/like/${postId}`, {
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => {
+    //     console.log("res", res.data.data);
+    //   })
+    //   .catch((err) => {
+    //     alert("포스팅에 실패했습니다.");
+    //   });
   };
 
   const comment_list = [
@@ -271,17 +322,17 @@ const Comments = () => {
 
       <div className="comment_count">
         <img src={comment} className="comment_icon" />
-        <span className="comment_countnum">{comment_countnum}</span>
+        <span className="comment_countnum">{movieDetail.total_comments}</span>
       </div>
 
-      {list.map((el, idx) => {
+      {comments.map((el, idx) => {
         return (
           <div className="comments" key={idx}>
-            <img src={el.img} className="otherprofile_img" />
+            <img src={profile} className="otherprofile_img" />
             <div className="comments_txt">
-              <p className="username">{el.username}</p>
+              <p className="username">{el.nickname}</p>
               <p className="comment">{el.comment}</p>
-              <p className="comment_date">{el.comment_date}</p>
+              <p className="comment_date">{Date(el.created_at)}</p>
             </div>
             <p className="line"></p>
           </div>
@@ -325,7 +376,7 @@ const Comments = () => {
                   setComment_countnum(comment_countnum + 1);
                 }
 
-                writingComment({ comment: obj.comment });
+                writingComment({comment: obj.comment});
               }}
             >
               완 료

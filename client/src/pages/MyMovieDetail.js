@@ -1,14 +1,27 @@
 import React from "react";
-import MovieDetail from "../component/MovieDetail";
+import MyMovieDetails from "../component/MyMovieDetails";
 import Comments from "../component/Comments";
 import Profile from "../component/Profile";
 
-const MyMovieDetail = () => {
+const MyMovieDetail = ({
+  movieDetail,
+  setMovieDetail,
+  comments,
+  setComments,
+  postId,
+  setPostId,
+}) => {
   return (
     <div className="section">
-      <Profile></Profile>
-      <MovieDetail></MovieDetail>
-      <Comments></Comments>
+      {/* <Profile></Profile> */}
+      <MyMovieDetails movieDetail={movieDetail}></MyMovieDetails>
+      <Comments
+        movieDetail={movieDetail}
+        comments={comments}
+        postId={postId}
+        setComments={setComments}
+        setMovieDetail={setMovieDetail}
+      ></Comments>
     </div>
   );
 };

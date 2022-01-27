@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./component/Header";
 import Footer from "./component/Footer";
 import Main from "./pages/Main";
@@ -10,78 +10,134 @@ import MyPage from "./pages/MyPage";
 import Posting from "./pages/Posting";
 import SignUp from "./pages/SignUp";
 import { Link, Route, Switch, useHistory } from "react-router-dom";
+import axios from "axios";
 
-const LoginData = {
-  email: "YeongYangJae@gmail.com",
-  nickName: "0_Yang_Jae",
-  password: "1234",
-};
+// const LoginData = {
+//   email: "YeongYangJae@gmail.com",
+//   nickName: "0_Yang_Jae",
+//   password: "1234",
+// };
 
 function App() {
-  let [isLogin, setIsLogin] = useState(false);
-  const [userinfo, setUserinfo] = useState(null);
-  const [selectContent, setSelectContent] = useState({
-    id: "",
-    image: "",
-    total_like: "",
-    total_comments: "",
-    movie_title: "",
-    movie_review: "",
-  });
-  const [comments, setComments] = useState({
-    id: "",
-    nickname: "",
-    created_at: "",
-    comment: "",
-    postId: "",
-  });
+  const history = useHistory();
 
+  let [isLogin, setIsLogin] = useState(false);
+  let [userinfo, setUserinfo] = useState(null);
+  let [jy, setJy] = useState("what");
+
+  const [comments, setComments] = useState([]);
+  const [postId, setPostId] = useState(0);
   const [movieDetail, setMovieDetail] = useState({});
   const [movieList, setMovieList] = useState([]);
+  const [gerne, setGerne] = useState("");
+  const [list, setList] = useState([]);
+
+  const isAuthenticated = () => {
+    axios
+      .get("http://localhost:3001/users/info", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        const {
+          user_name,
+          nickname,
+          email,
+          profile_image,
+          phone_number,
+          birthday,
+        } = res.data.data.userInfo;
+        setUserinfo({
+          user_name,
+          nickname,
+          email,
+          profile_image,
+          phone_number,
+          birthday,
+        });
+        setJy("지영");
+        console.log(userinfo, jy);
+      })
+      .then((res) => {
+        setIsLogin(true);
+      })
+      .catch((err) => {
+        setIsLogin(false);
+      });
+  };
+
+  const handleResponseSuccess = () => {
+    isAuthenticated();
+  };
+  const handleLogout = () => {
+    axios.post("http://localhost:3001/logout").then((res) => {
+      setUserinfo(null);
+      setIsLogin(false);
+      history.push("/");
+    });
+  };
+
+  //리로딩시 로그인이 풀리지 않도록함.
+  useEffect(() => {
+    isAuthenticated();
+  }, []);
 
   return (
     <div className="App">
       <Header
         isLogin={isLogin}
         setIsLogin={setIsLogin}
-        LoginData={LoginData}
+        handleResponseSuccess={handleResponseSuccess}
+        handleLogout={handleLogout}
+        jy={jy}
       ></Header>
       <Switch>
         <Route exact path="/">
           <Main
-            selectContent={selectContent}
-            setSelectContent={setSelectContent}
             comments={comments}
             setComments={setComments}
             movieList={movieList}
             setMovieList={setMovieList}
             movieDetail={movieDetail}
             setMovieDetail={setMovieDetail}
+            postId={postId}
+            setPostId={setPostId}
+            gerne={gerne}
+            setGerne={setGerne}
+            list={list}
+            setList={setList}
           ></Main>
         </Route>
         <Route path="/detail">
           <MainMovieDetail
-            selectContent={selectContent}
-            setSelectContent={setSelectContent}
             comments={comments}
             setComments={setComments}
             movieDetail={movieDetail}
+            postId={postId}
             setMovieDetail={setMovieDetail}
           ></MainMovieDetail>
         </Route>
         <Route path="/mymovie">
-          <MyMovie LoginData={LoginData}></MyMovie>
+          <MyMovie
+            comments={comments}
+            setMovieDetail={setMovieDetail}
+            movieDetail={movieDetail}
+            setComments={setComments}
+            postId={postId}
+            setPostId={setPostId}
+          ></MyMovie>
         </Route>
         <Route path="/mymoviedetail">
           <MyMovieDetail
-            selectContent={selectContent}
-            setSelectContent={setSelectContent}
             comments={comments}
             setComments={setComments}
+            movieDetail={movieDetail}
+            postId={postId}
+            setPostId={setPostId}
+            setMovieDetail={setMovieDetail}
           ></MyMovieDetail>
         </Route>
         <Route path="/mypage">
-          <MyPage LoginData={LoginData}></MyPage>
+          <MyPage userinfo={userinfo} jy={jy}></MyPage>
         </Route>
         <Route path="/posting">
           <Posting></Posting>

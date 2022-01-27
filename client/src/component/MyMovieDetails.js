@@ -35,6 +35,7 @@ const Movie_list_post_image = styled.div`
     width: 329px;
     height: 480px;
     border-radius: 10px;
+    background-color: aquamarine;
   }
 `;
 
@@ -123,7 +124,7 @@ const Movie_info = styled.div`
   }
 `;
 
-const MovieDetail = ({ movieDetail, setMovieDetail }) => {
+const MyMovieDetails = ({ movieDetail }) => {
   return (
     <MovieDetail_ul>
       <li>
@@ -136,13 +137,14 @@ const MovieDetail = ({ movieDetail, setMovieDetail }) => {
           <div className="post_list">
             <div className="title">{movieDetail.movie_title}</div>
             <div className="review">{movieDetail.movie_review}</div>
-            {/* <div className="gernelist">#액션&nbsp;#SF</div> */}
-            {/* <div className="movie_div">
-              <div className="theater">cgv 일산</div>
-              <div className="seat">H14열</div>
-            </div> */}
+            <div className="gernelist">{movieDetail.movie_review}</div>
+            {/* #액션&nbsp;#SF */}
+            <div className="movie_div">
+              <div className="theater">{movieDetail.movie_theater}</div>
+              <div className="seat">{movieDetail.movie_seat}</div>
+            </div>
 
-            {/* <div className="dateTime">2022. 01. 28 오후 02:00</div> */}
+            <div className="dateTime">2022. 01. 28 오후 02:00</div>
             <div
               className="barcode"
               style={{
@@ -166,4 +168,4 @@ const MovieDetail = ({ movieDetail, setMovieDetail }) => {
   );
 };
 
-export default MovieDetail;
+export default MyMovieDetails;

@@ -44,7 +44,12 @@ const Profile = ({ LoginData, myMovie_list }) => {
   return (
     <div className="profile_div">
       <Profile_ul>
-        <div className="profile_image">
+        <div
+          className="profile_image"
+          onClick={() => {
+            history.push("/mymoviedetail");
+          }}
+        >
           <img src={profile}></img>
         </div>
         <div className="profile_list">
@@ -57,7 +62,7 @@ const Profile = ({ LoginData, myMovie_list }) => {
                 marginTop: "2px",
               }}
             >
-              {LoginData.nickName}
+              {/* {LoginData.nickname} */}
             </li>
             <li
               style={{
@@ -67,7 +72,7 @@ const Profile = ({ LoginData, myMovie_list }) => {
                 marginTop: "4px",
               }}
             >
-              {LoginData.email}
+              {/* {LoginData.email} */}
             </li>
             <li
               style={{

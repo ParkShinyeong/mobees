@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import prev from "../icon/prev_icon.png";
 import next from "../icon/next_icon.png";
 import styled, { keyframes } from "styled-components";
+import axios from "axios";
 
 const GerneList = styled.div`
   height: 40px;
@@ -99,13 +100,26 @@ const Slidebtn = styled.li`
   }
 `;
 
-const Gerne = () => {
+const Gerne = ({ gerne, setGerne, list, setList }) => {
   let [isMove, setMove] = useState(40);
   let [isOn, setIsOn] = useState(1);
+
   // const style = {
   //   left: isMove +'px'
   //   // transform: translateX(isMove)
   // }
+  const movieList = (gerne) => {
+    axios
+      .get(`http://localhost:3001/main-movies/${gerne}`)
+      .then((movieData) => {
+        console.log(movieData.data.data.mainMovie);
+        setList(movieData.data.data.mainMovie);
+        // console.log(list);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="gerne ">
@@ -123,6 +137,8 @@ const Gerne = () => {
           <Slidebtn
             onClick={() => {
               setIsOn(1);
+              setGerne("");
+              movieList(gerne);
             }}
           >
             Total
@@ -130,6 +146,8 @@ const Gerne = () => {
           <Slidebtn
             onClick={() => {
               setIsOn(2);
+              setGerne("코미디");
+              movieList(gerne);
             }}
           >
             코미디
@@ -137,6 +155,8 @@ const Gerne = () => {
           <Slidebtn
             onClick={() => {
               setIsOn(3);
+              setGerne("로맨스");
+              movieList(gerne);
             }}
           >
             로맨스
@@ -144,6 +164,8 @@ const Gerne = () => {
           <Slidebtn
             onClick={() => {
               setIsOn(4);
+              setGerne("드라마");
+              movieList(gerne);
             }}
           >
             드라마
@@ -151,6 +173,8 @@ const Gerne = () => {
           <Slidebtn
             onClick={() => {
               setIsOn(5);
+              setGerne("액션");
+              movieList(gerne);
             }}
           >
             액션
@@ -158,6 +182,8 @@ const Gerne = () => {
           <Slidebtn
             onClick={() => {
               setIsOn(6);
+              setGerne("스릴러");
+              movieList(gerne);
             }}
           >
             스릴러
@@ -165,6 +191,8 @@ const Gerne = () => {
           <Slidebtn
             onClick={() => {
               setIsOn(7);
+              setGerne("판타지");
+              movieList(gerne);
             }}
           >
             판타지
@@ -172,6 +200,8 @@ const Gerne = () => {
           <Slidebtn
             onClick={() => {
               setIsOn(8);
+              setGerne("SF");
+              movieList(gerne);
             }}
           >
             SF
@@ -179,6 +209,8 @@ const Gerne = () => {
           <Slidebtn
             onClick={() => {
               setIsOn(9);
+              setGerne("호러");
+              movieList(gerne);
             }}
           >
             호러

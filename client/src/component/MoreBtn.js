@@ -18,6 +18,7 @@ const MoreBtnBox = styled.div`
     }
   }
 `;
+
 const MoreBtn = ({ list, setList }) => {
   const [loading, setLoading] = useState(false);
   let pageNume = 0;

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import logo from "../icon/logo_v1.png";
+import axios from "axios";
 
 const SignUp_div = styled.div`
   width: 1024px;
@@ -59,21 +60,25 @@ const SignUp_div = styled.div`
         width: 252px;
         height: 35px;
         margin: 11px auto 15px auto;
+        outline: none;
       }
       > .nickname {
         width: 252px;
         height: 35px;
         margin: 15px auto;
+        outline: none;
       }
       > .password {
         width: 252px;
         height: 35px;
         margin: 15px auto;
+        outline: none;
       }
       > .repassword {
         width: 252px;
         height: 35px;
         margin: 15px auto;
+        outline: none;
       }
       > .join_div {
         width: 252px;
@@ -122,7 +127,45 @@ const SignUp_div = styled.div`
 `;
 
 const Sign = () => {
+  const [userinfo, setuserinfo] = useState({
+    email: "",
+    password: "",
+    nickname: "",
+  });
+
   const history = useHistory();
+
+  const handleInputValue = (key) => (e) => {
+    setuserinfo({ ...userinfo, [key]: e.target.value });
+  };
+
+  const handleSignup = () => {
+    const { email, password, nickname } = userinfo;
+    console.log(userinfo);
+    if (email === "" || password === "" || nickname === "") {
+      return console.log("모든 항목은 필수입니다");
+    }
+    axios
+      .post(
+        "http://localhost:3001/signup",
+        {
+          email,
+          password,
+          nickname,
+        },
+        {
+          // headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      )
+      .then(() => {
+        history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <SignUp_div>
       <ul>
@@ -164,6 +207,7 @@ const Sign = () => {
             className="loginId"
             type="text"
             placeholder="이메일을 입력해주세요."
+            onChange={handleInputValue("email")}
             // style="border: 1px solid #ddd;"
             // onChange={this.loginHandler}
           />
@@ -172,7 +216,7 @@ const Sign = () => {
             className="nickname"
             type="text"
             placeholder="닉네임을 입력해주세요."
-
+            onChange={handleInputValue("nickname")}
             // onChange={this.loginHandler}
           />
           <input
@@ -181,7 +225,7 @@ const Sign = () => {
             type="password"
             placeholder="비밀번호는 4-12자리의 숫자,영문이어야 합니다."
             maxLength="12"
-
+            onChange={handleInputValue("password")}
             // onChange={this.loginHandler}
           />
           <input
@@ -190,14 +234,14 @@ const Sign = () => {
             type="password"
             placeholder="비밀번호를 한번 더 입력해주세요."
             maxLength="12"
-
+            onChange={handleInputValue("password")}
             // onChange={this.loginHandler}
           />
           <div className="join_div">
             <div
               className="join_btn"
               onClick={() => {
-                history.push("/");
+                handleSignup();
                 // closeModal();
               }}
             >

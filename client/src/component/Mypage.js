@@ -48,29 +48,26 @@ const Mypage_div = styled.div`
           font-weight: 500;
           font-size: 18px;
           margin-bottom: 10px;
-          text-align: center;
+          text-align:center;
         }
       }
     }
   }
 `;
 
-const Mypage = ({ userinfo, jy }) => {
-  console.log(userinfo, jy);
+const Mypage = ({userinfo, jy}) => {
+  console.log(userinfo ,jy)
   return (
     <Mypage_div>
       <ul>
         <li className="mypage_image">
-          {userinfo.profile_image ? (
-            <img src={userinfo.profile_image}></img>
-          ) : (
-            <img src={profile}></img>
-          )}
+          { userinfo.profile_image ? 
+          <img src={userinfo.profile_image}></img>
+          : <img src={profile}></img> }
         </li>
         <li className="mypage_list">
           <ul>
-            <li
-              className="nickname"
+            <li className="nickname"
               style={{
                 fontWeight: "bold",
                 fontSize: "27px",
@@ -79,20 +76,10 @@ const Mypage = ({ userinfo, jy }) => {
             >
               {userinfo.nickname}
             </li>
-            {userinfo.user_name ? (
-              <li className="userinfo_list">이름 : {userinfo.user_name}</li>
-            ) : null}
-            {userinfo.email ? (
-              <li className="userinfo_list">이메일 : {userinfo.email}</li>
-            ) : null}
-            {userinfo.phone_number ? (
-              <li className="userinfo_list">
-                핸드폰 : {userinfo.phone_number}
-              </li>
-            ) : null}
-            {userinfo.birthday ? (
-              <li className="userinfo_list">생일 : {userinfo.birthday}</li>
-            ) : null}
+            { userinfo.user_name ?  <li className="userinfo_list">이름 : {userinfo.user_name}</li> : null}
+            { userinfo.email ?  <li className="userinfo_list">이메일 : {userinfo.email}</li> : null}
+            { userinfo.phone_number ?  <li className="userinfo_list">핸드폰 : {userinfo.phone_number}</li> : null}
+            { userinfo.birthday ?  <li className="userinfo_list">생일 : {userinfo.birthday}</li> : null}
           </ul>
         </li>
       </ul>

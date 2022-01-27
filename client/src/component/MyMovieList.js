@@ -18,7 +18,7 @@ const Movie_list_ul = styled.ul`
   list-style: none;
 
   > li {
-    width: auto;
+    width: 236px;
     box-shadow: 2px 3px 4px 2px #ddd;
     min-height: 350px;
     border: 1px solid #fff;
@@ -96,10 +96,12 @@ const MovieList = ({
 
   const movieList = () => {
     axios
-      .get("http://localhost:3001/main-movies")
+      .get("http://localhost:3001/my-movies", {
+        withCredentials: true,
+      })
       .then((movieData) => {
         // console.log(movieData.data.data.mainMovie);
-        Setlist(movieData.data.data.mainMovie);
+        Setlist(movieData.data.data.myMovie);
         // console.log(list);
       })
       .catch((err) => {
@@ -113,12 +115,15 @@ const MovieList = ({
 
   const detail = (postid) => {
     axios
-      .get(`http://localhost:3001/main-movies/view/${postid}`)
+      .get(`http://localhost:3001/my-movies/view/${postid}`, {
+        withCredentials: true,
+      })
       .then((movieData) => {
-        setMovieDetail(movieData.data.data.mainMovieView);
+        setMovieDetail(movieData.data.data.myMovie);
         setComments(movieData.data.data.comment);
         setPostId(postid);
-        console.log(movieData.data.data.comment);
+        console.log(movieData.data.data.myMovie);
+        // console.log(movieData.data.data.comment);
       });
   };
 
@@ -131,7 +136,7 @@ const MovieList = ({
             onClick={() => {
               detail(el.id);
               console.log(postId);
-              history.push("/detail");
+              history.push("/mymoviedetail");
             }}
           >
             <Movie_list_image>

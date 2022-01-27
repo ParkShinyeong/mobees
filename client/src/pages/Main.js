@@ -10,11 +10,22 @@ const Main = ({
   setMovieList,
   movieDetail,
   setMovieDetail,
+  postId,
+  setPostId,
+  gerne,
+  setGerne,
+  list,
+  setList,
 }) => {
   return (
     <>
       <div className="section">
-        <Gerne></Gerne>
+        <Gerne
+          gerne={gerne}
+          setGerne={setGerne}
+          list={list}
+          setList={setList}
+        ></Gerne>
         <MovieList
           selectContent={selectContent}
           setSelectContent={setSelectContent}
@@ -22,6 +33,12 @@ const Main = ({
           setComments={setComments}
           movieDetail={movieDetail}
           setMovieDetail={setMovieDetail}
+          postId={postId}
+          setPostId={setPostId}
+          gerne={gerne}
+          setGerne={setGerne}
+          list={list}
+          setList={setList}
         ></MovieList>
       </div>
     </>

@@ -47,7 +47,7 @@ const Post_image = styled.div`
     height: 480px;
     /* background-color: red; */
   }
-  .chooseImg:hover{
+  .chooseImg:hover {
     opacity: 0.3;
   }
   .chooseImg:hover ~ .addImg_icon {
@@ -315,7 +315,9 @@ const Posting = () => {
               onClick={(e) => {
                 openModal(e);
               }}
-            > { imgUrl === '' ? 
+            >
+              {" "}
+              {imgUrl === "" ? (
                 <div className="posting_image">
                   <p
                     style={{
@@ -328,14 +330,15 @@ const Posting = () => {
                     Post Image
                   </p>
                   <div>
-                    <img src={addPost}></img>                  
+                    <img src={addPost}></img>
                   </div>
                 </div>
-                : <div className="posting_image">
-                    <img className="chooseImg" src={imgUrl}></img>
-                    <img className="addImg_icon" src={addPost}></img>    
+              ) : (
+                <div className="posting_image">
+                  <img className="chooseImg" src={imgUrl}></img>
+                  <img className="addImg_icon" src={addPost}></img>
                 </div>
-              }
+              )}
             </Post_image>
           )}
         </li>
@@ -390,7 +393,14 @@ const Posting = () => {
                 }}
                 value={seat}
               />
-              <div className="select_modal_btn" onClick={()=>{setSelectModal(true);}}>장르선택</div>
+              <div
+                className="select_modal_btn"
+                onClick={() => {
+                  setSelectModal(true);
+                }}
+              >
+                장르선택
+              </div>
               <MovieReview>
                 {/* <p className="username">Mobees_username</p> */}
                 <textarea
@@ -419,10 +429,12 @@ const Posting = () => {
         info={dateTime}
         genres={genres}
       ></PostBtn>
-      { selectModal ? <SelectModal
-        closeSelectModal={closeSelectModal}
-        setGenres={setGenres}
-      ></SelectModal> : null}
+      {selectModal ? (
+        <SelectModal
+          closeSelectModal={closeSelectModal}
+          setGenres={setGenres}
+        ></SelectModal>
+      ) : null}
     </>
   );
 };
