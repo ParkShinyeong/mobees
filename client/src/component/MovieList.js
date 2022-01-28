@@ -96,7 +96,10 @@ const MovieList = ({
 
   const movieList = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/main-movies`)
+      .get(
+        // `${process.env.REACT_APP_API_URL}/main-movies`
+        "http://ec2-13-125-214-152.ap-northeast-2.compute.amazonaws.com/main-movies"
+      )
       .then((movieData) => {
         // console.log(movieData.data.data.mainMovie);
         Setlist(movieData.data.data.mainMovie);

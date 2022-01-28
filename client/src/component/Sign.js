@@ -147,7 +147,8 @@ const Sign = () => {
     }
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/signup`,
+        // `${process.env.REACT_APP_API_URL}/signup`,
+        "http://ec2-13-125-214-152.ap-northeast-2.compute.amazonaws.com/signup",
         {
           email,
           password,

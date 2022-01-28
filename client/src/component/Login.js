@@ -143,7 +143,8 @@ const Login = ({ closeModal, setIsLogin, handleResponseSuccess }) => {
     } else {
       axios
         .post(
-          `${process.env.REACT_APP_API_URL}/login`,
+          // `${process.env.REACT_APP_API_URL}/login`,
+          "http://ec2-13-125-214-152.ap-northeast-2.compute.amazonaws.com/login",
           {
             email,
             password,
