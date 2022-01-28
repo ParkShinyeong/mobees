@@ -168,6 +168,7 @@ const Post_infor = styled.div`
     }
     input[type="datetime-local"]:valid {
       color: rgb(0, 0, 0, 0.4);
+      letter-spacing: -1px;
     }
     > .movie_seat {
       width: 120px;

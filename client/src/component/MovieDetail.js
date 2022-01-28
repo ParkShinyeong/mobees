@@ -50,12 +50,11 @@ const Movie_info = styled.div`
   /* transform: scale(0, -1); */
   .post_list {
     width: 100%;
-    height: 420px;
+    height: 300px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: darkorange;
 
     > .title {
       width: 100%;
@@ -148,7 +147,7 @@ const MovieDetail = ({ movieDetail, setMovieDetail }) => {
               style={{
                 width: "180px",
                 height: "48px",
-                margin: "32px auto",
+                margin: "45px auto",
               }}
             >
               <img

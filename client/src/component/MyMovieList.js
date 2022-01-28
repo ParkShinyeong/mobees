@@ -7,7 +7,7 @@ import axios from "axios";
 
 const Movie_list_ul = styled.ul`
   max-width: 1024px;
-  margin: 0 auto;
+  margin: 72px auto 0 auto;
   display: grid;
   grid-template-columns: auto auto auto auto;
   padding: 5px;
@@ -96,7 +96,7 @@ const MovieList = ({
 
   const movieList = () => {
     axios
-      .get("http://localhost:3001/my-movies", {
+      .get(`${process.env.REACT_APP_API_URL}/my-movies`, {
         withCredentials: true,
       })
       .then((movieData) => {
@@ -115,7 +115,7 @@ const MovieList = ({
 
   const detail = (postid) => {
     axios
-      .get(`http://localhost:3001/my-movies/view/${postid}`, {
+      .get(`${process.env.REACT_APP_API_URL}/my-movies/view/${postid}`, {
         withCredentials: true,
       })
       .then((movieData) => {
@@ -129,29 +129,44 @@ const MovieList = ({
 
   return (
     <>
-      <Movie_list_ul>
-        {list.map((el, idx) => (
-          <li
-            key={idx}
-            onClick={() => {
-              detail(el.id);
-              console.log(postId);
-              history.push("/mymoviedetail");
+      {list.length === 0 ? (
+        <>
+          <div
+            className="emptyList"
+            style={{
+              height: "413px",
             }}
-          >
-            <Movie_list_image>
-              <img src={el.image}></img>
-            </Movie_list_image>
-            <Movie_like>
-              <ul>
-                <img className="like_image" src={like}></img>
-                <li className="like_count">{el.total_likes}</li>
-              </ul>
-            </Movie_like>
-          </li>
-        ))}
-      </Movie_list_ul>
-      <MoreBtn list={list} setList={Setlist}></MoreBtn>
+          ></div>
+        </>
+      ) : (
+        <>
+          <Movie_list_ul>
+            {list.map((el, idx) => (
+              <li
+                key={idx}
+                onClick={() => {
+                  detail(el.id);
+                  console.log(postId);
+                  // history.push("/mymoviedetail");
+                }}
+              >
+                <Movie_list_image>
+                  <img src={el.image}></img>
+                </Movie_list_image>
+                <Movie_like>
+                  <ul>
+                    <img className="like_image" src={like}></img>
+                    <li className="like_count">{el.total_likes}</li>
+                  </ul>
+                </Movie_like>
+              </li>
+            ))}
+          </Movie_list_ul>
+        </>
+      )}
+      {list.length > 8 ? (
+        <MoreBtn list={list} setList={Setlist}></MoreBtn>
+      ) : null}
     </>
   );
 };

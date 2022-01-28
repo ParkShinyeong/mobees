@@ -6,7 +6,7 @@ import profile from "../icon/user_icon.png";
 const Profile_ul = styled.div`
   width: 45%;
   /* height: 80px; */
-  /* background-color: darkorange; */
+
   list-style: none;
   margin: 0 auto;
   position: relative;
@@ -39,16 +39,16 @@ const Profile_ul = styled.div`
   }
 `;
 
-const Profile = ({ LoginData, myMovie_list }) => {
+const Profile = ({ userinfo, myMovie_list, list }) => {
   const history = useHistory();
   return (
     <div className="profile_div">
       <Profile_ul>
         <div
           className="profile_image"
-          onClick={() => {
-            history.push("/mymoviedetail");
-          }}
+          // onClick={() => {
+          //   history.push("/mymoviedetail");
+          // }}
         >
           <img src={profile}></img>
         </div>
@@ -62,7 +62,7 @@ const Profile = ({ LoginData, myMovie_list }) => {
                 marginTop: "2px",
               }}
             >
-              {/* {LoginData.nickname} */}
+              {userinfo.nickname}
             </li>
             <li
               style={{
@@ -72,7 +72,7 @@ const Profile = ({ LoginData, myMovie_list }) => {
                 marginTop: "4px",
               }}
             >
-              {/* {LoginData.email} */}
+              {userinfo.email}
             </li>
             <li
               style={{
@@ -81,7 +81,7 @@ const Profile = ({ LoginData, myMovie_list }) => {
                 marginTop: "10px",
               }}
             >
-              게시글 &nbsp;{myMovie_list.length}
+              게시글 &nbsp;{list.length}
             </li>
           </ul>
         </div>

@@ -10,12 +10,18 @@ const MyMovie = ({
   setComments,
   postId,
   setPostId,
+  list,
+  userinfo,
 }) => {
   const myMovie_list = [23, 45, 34, 27, 55, 63, 12, 32];
   return (
     <>
       <div className="section">
-        <Profile LoginData={LoginData} myMovie_list={myMovie_list}></Profile>
+        <Profile
+          userinfo={userinfo}
+          list={list}
+          myMovie_list={myMovie_list}
+        ></Profile>
         <MyMovieList
           comments={comments}
           setMovieDetail={setMovieDetail}

@@ -96,7 +96,7 @@ const MovieList = ({
 
   const movieList = () => {
     axios
-      .get("http://localhost:3001/main-movies")
+      .get(`${process.env.REACT_APP_API_URL}/main-movies`)
       .then((movieData) => {
         // console.log(movieData.data.data.mainMovie);
         Setlist(movieData.data.data.mainMovie);
@@ -113,7 +113,7 @@ const MovieList = ({
 
   const detail = (postid) => {
     axios
-      .get(`http://localhost:3001/main-movies/view/${postid}`)
+      .get(`${process.env.REACT_APP_API_URL}/main-movies/view/${postid}`)
       .then((movieData) => {
         setMovieDetail(movieData.data.data.mainMovieView);
         setComments(movieData.data.data.comment);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import logo from "../icon/logo_v1.png";
@@ -26,7 +26,7 @@ const SignUp_div = styled.div`
 
     > .signUp_logo {
       width: 200px;
-      height: 140px;
+      height: 70px;
       /* background-color: #ddd; */
       margin: 40px auto 30px auto;
       box-sizing: border-box;
@@ -56,28 +56,10 @@ const SignUp_div = styled.div`
       /* background-color: #ddd; */
       /* border: 1px solid #8b8585; */
       margin: 0 auto;
-      > .loginId {
+      > input {
         width: 252px;
         height: 35px;
-        margin: 11px auto 15px auto;
-        outline: none;
-      }
-      > .nickname {
-        width: 252px;
-        height: 35px;
-        margin: 15px auto;
-        outline: none;
-      }
-      > .password {
-        width: 252px;
-        height: 35px;
-        margin: 15px auto;
-        outline: none;
-      }
-      > .repassword {
-        width: 252px;
-        height: 35px;
-        margin: 15px auto;
+        margin: 11px auto 10px auto;
         outline: none;
       }
       > .join_div {
@@ -85,7 +67,7 @@ const SignUp_div = styled.div`
         height: 35px;
         /* background-color: cadetblue; */
         position: relative;
-        margin-top: 15px;
+        margin-top: 35px;
         > .join_btn {
           width: 95px;
           height: 38px;
@@ -120,36 +102,61 @@ const SignUp_div = styled.div`
             background-color: rgb(0, 0, 0, 0.15);
             color: #2b2828;
           }
+
+          > .delete {
+            width: 95px;
+            height: 37px;
+            /* border: 1px solid #2b2828; */
+            cursor: pointer;
+            border-radius: 20px;
+            line-height: 37px;
+            right: 7%;
+            position: absolute;
+            color: rgb(0, 0, 0, 0.5);
+            top: 0;
+            background-color: rgb(0, 0, 0, 0.1);
+            &:hover {
+              background-color: rgb(0, 0, 0, 0.15);
+              color: #2b2828;
+            }
+          }
         }
       }
     }
   }
 `;
 
-const Sign = () => {
-  const [userinfo, setuserinfo] = useState({
-    email: "",
+const EditMypage = ({ userinfo, loading_count }) => {
+  const history = useHistory();
+  // console.log(userinfo)
+  // user_name, nickname, profile_image, phone_number, password
+  const [myinfo, setMyinfo] = useState({
+    user_name: userinfo.user_name,
+    phone_number: userinfo.phone_number,
+    profile_image: userinfo.profile_image,
+    nickname: userinfo.nickname,
     password: "",
-    nickname: "",
   });
 
-  const history = useHistory();
-
+  let { user_name, phone_number, profile_image, password, nickname } = userinfo;
   const handleInputValue = (key) => (e) => {
-    setuserinfo({ ...userinfo, [key]: e.target.value });
+    setMyinfo({ ...myinfo, [key]: e.target.value });
+    console.log("수정중", myinfo);
   };
 
-  const handleSignup = () => {
-    const { email, password, nickname } = userinfo;
-    console.log(userinfo);
-    if (email === "" || password === "" || nickname === "") {
-      return console.log("모든 항목은 필수입니다");
+  const handleSignup = (obj) => {
+    const { user_name, phone_number, profile_image, password, nickname } = obj;
+    console.log(obj);
+    if (password === "") {
+      alert("이름, 닉네임, 비밀번호 입력은 필수입니다");
     }
     axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/signup`,
+      .patch(
+        `${process.env.REACT_APP_API_URL}/users/info`,
         {
-          email,
+          user_name,
+          phone_number,
+          profile_image,
           password,
           nickname,
         },
@@ -158,7 +165,8 @@ const Sign = () => {
           withCredentials: true,
         }
       )
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         history.push("/");
       })
       .catch((err) => {
@@ -174,29 +182,11 @@ const Sign = () => {
             <li
               style={{
                 fontWeight: "bold",
-                fontSize: "23px",
-                textAlign: "center",
-              }}
-            >
-              WELCOME
-            </li>
-            <li
-              style={{
-                fontWeight: "bold",
-                fontSize: "18px",
-                textAlign: "center",
-              }}
-            >
-              TO
-            </li>
-            <li
-              style={{
-                fontWeight: "bold",
                 fontSize: "35px",
                 textAlign: "center",
               }}
             >
-              MoBees
+              회원정보수정
             </li>
             {/* <img className="image" src={logo}></img> */}
           </ul>
@@ -206,8 +196,8 @@ const Sign = () => {
             name="email"
             className="loginId"
             type="text"
-            placeholder="이메일을 입력해주세요."
-            onChange={handleInputValue("email")}
+            placeholder={user_name ? user_name : "이름을 입력하세요"}
+            onChange={handleInputValue("user_name")}
             // style="border: 1px solid #ddd;"
             // onChange={this.loginHandler}
           />
@@ -215,7 +205,7 @@ const Sign = () => {
             name="nickname"
             className="nickname"
             type="text"
-            placeholder="닉네임을 입력해주세요."
+            placeholder={nickname ? nickname : "닉네임을 입력하세요"}
             onChange={handleInputValue("nickname")}
             // onChange={this.loginHandler}
           />
@@ -223,7 +213,7 @@ const Sign = () => {
             name="password"
             className="password"
             type="password"
-            placeholder="비밀번호는 4-12자리의 숫자,영문이어야 합니다."
+            placeholder="변경할 비밀번호 또는 현재 비밀번호를 입력하세요"
             maxLength="12"
             onChange={handleInputValue("password")}
             // onChange={this.loginHandler}
@@ -231,18 +221,25 @@ const Sign = () => {
           <input
             name="password"
             className="repassword"
-            type="password"
-            placeholder="비밀번호를 한번 더 입력해주세요."
+            type="text"
+            placeholder={phone_number ? phone_number : "전화번호를 입력하세요"}
             maxLength="12"
-            onChange={handleInputValue("password")}
+            onChange={handleInputValue("phone_number")}
+            // onChange={this.loginHandler}
+          />
+          <input
+            name="password"
+            className="repassword"
+            type="text"
+            placeholder={profile_image ? profile_image : "사진URL을 입력하세요"}
+            onChange={handleInputValue("profile_image")}
             // onChange={this.loginHandler}
           />
           <div className="join_div">
             <div
               className="join_btn"
               onClick={() => {
-                handleSignup();
-                // closeModal();
+                handleSignup(myinfo);
               }}
             >
               <p
@@ -254,7 +251,7 @@ const Sign = () => {
                   margin: "0px",
                 }}
               >
-                가입하기
+                확인
               </p>
             </div>
             <div
@@ -275,6 +272,24 @@ const Sign = () => {
                 취소
               </p>
             </div>
+            {/* <div
+              className="delete"
+              onClick={() => {
+                history.push("/");
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "15px",
+                  fontWeight: "500",
+                  // color: "#2b2828",
+                  textAlign: "center",
+                  margin: "0px",
+                }}
+              >
+                회원탈퇴
+              </p>
+            </div> */}
           </div>
         </li>
       </ul>
@@ -282,4 +297,4 @@ const Sign = () => {
   );
 };
 
-export default Sign;
+export default EditMypage;

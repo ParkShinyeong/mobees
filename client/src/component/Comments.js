@@ -5,7 +5,7 @@ import profile from "../icon/user_icon.png";
 import likeAfter from "../icon/likeAfter_icon2.png";
 import likeBefore from "../icon/likeBefore_icon.png";
 import comment from "../icon/comment.png";
-import axios from 'axios';
+import axios from "axios";
 
 const Comment = styled.div`
   max-width: 650px;
@@ -187,7 +187,7 @@ const Comment = styled.div`
     background-color: #ffd900;
     color:#000;
   } 
-`
+`;
 
 // const Comments = () => {
 
@@ -196,7 +196,7 @@ const Comment = styled.div`
 //     console.log('파라미터', key)
 //     const postId = 1;
 //     axios
-//     .post(`http://localhost:3001/posts/comment/${postId}`, 
+//     .post(`http://localhost:3001/posts/comment/${postId}`,
 //       { comment },{
 //         withCredentials: true
 //       })
@@ -211,7 +211,7 @@ const Comment = styled.div`
 //   const pressLike = () => {
 //     const postId = 1;
 //     axios
-//     .post(`http://localhost:3001/posts/like/${postId}`, 
+//     .post(`http://localhost:3001/posts/like/${postId}`,
 //       {
 //         withCredentials: true
 //       })
@@ -230,7 +230,7 @@ const Comments = ({
 }) => {
   const detail = (postid) => {
     axios
-      .get(`http://localhost:3001/main-movies/view/${postid}`)
+      .get(`${process.env.REACT_APP_API_URL}/${postid}`)
       .then((movieData) => {
         setMovieDetail(movieData.data.data.mainMovieView);
         setComments(movieData.data.data.comment);
@@ -247,7 +247,7 @@ const Comments = ({
 
     axios
       .post(
-        `http://localhost:3001/posts/comment/${postId}`,
+        `${process.env.REACT_APP_API_URL}/${postId}`,
         { comment },
         {
           withCredentials: true,
@@ -376,7 +376,7 @@ const Comments = ({
                   setComment_countnum(comment_countnum + 1);
                 }
 
-                writingComment({comment: obj.comment});
+                writingComment({ comment: obj.comment });
               }}
             >
               완 료

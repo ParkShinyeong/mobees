@@ -27,7 +27,7 @@ const MoreBtn = ({ list, setList }) => {
     num = list.length / 8;
 
     axios
-      .get("http://localhost:3001/main-movies", {
+      .get(`${process.env.REACT_APP_API_URL}/main-movies`, {
         params: {
           page: num,
         },

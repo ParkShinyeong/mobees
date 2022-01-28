@@ -3,7 +3,7 @@ const app = express();
 const indexRouter = require("./routes");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const port = 80;
+const port = 3001;
 const models = require("./models/index.js");
 
 models.sequelize
@@ -22,7 +22,7 @@ app.use(cookieParser()); // 쿠키 추출
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"], // 수정 3001
+    origin: true, // 수정 3001
     // origin: true,
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
@@ -30,9 +30,9 @@ app.use(
 );
 
 app.use("/", indexRouter);
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
+// app.get('/', (req, res) => {
+//   res.send("Hello world")
+// })
 
 app.listen(port, () => {
   console.log(

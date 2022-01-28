@@ -92,7 +92,7 @@ const Slidebtn = styled.li`
   white-space: nowrap;
   font-size: 18px;
   font-weight: bold;
-  color: rgb(0, 0, 0, 0.5);
+  color: rgb(0, 0, 0, 0.4);
   cursor: pointer;
   &:hover {
     color: rgb(0, 0, 0, 1);
@@ -110,7 +110,7 @@ const Gerne = ({ gerne, setGerne, list, setList }) => {
   // }
   const movieList = (gerne) => {
     axios
-      .get(`http://localhost:3001/main-movies/${gerne}`)
+      .get(`${process.env.REACT_APP_API_URL}/${gerne}`)
       .then((movieData) => {
         console.log(movieData.data.data.mainMovie);
         setList(movieData.data.data.mainMovie);

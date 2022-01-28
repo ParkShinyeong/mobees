@@ -9,6 +9,7 @@ import MyMovieDetail from "./pages/MyMovieDetail";
 import MyPage from "./pages/MyPage";
 import Posting from "./pages/Posting";
 import SignUp from "./pages/SignUp";
+import EditMyInfo from "./pages/EditMyInfo";
 import { Link, Route, Switch, useHistory } from "react-router-dom";
 import axios from "axios";
 
@@ -34,7 +35,7 @@ function App() {
 
   const isAuthenticated = () => {
     axios
-      .get("http://localhost:3001/users/info", {
+      .get(`${process.env.REACT_APP_API_URL}/users/info`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -69,7 +70,7 @@ function App() {
     isAuthenticated();
   };
   const handleLogout = () => {
-    axios.post("http://localhost:3001/logout").then((res) => {
+    axios.post(`${process.env.REACT_APP_API_URL}/logout`).then((res) => {
       setUserinfo(null);
       setIsLogin(false);
       history.push("/");
@@ -124,6 +125,8 @@ function App() {
             setComments={setComments}
             postId={postId}
             setPostId={setPostId}
+            list={list}
+            userinfo={userinfo}
           ></MyMovie>
         </Route>
         <Route path="/mymoviedetail">
@@ -144,6 +147,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <SignUp></SignUp>
+        </Route>
+        <Route path="/editmyinfo">
+          <EditMyInfo userinfo={userinfo}></EditMyInfo>
         </Route>
       </Switch>
       <Footer></Footer>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import github_icon from "../icon/github_icon.png";
-import axios from 'axios';
+import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
@@ -46,12 +46,14 @@ const Login_div = styled.div`
         margin: 10px auto;
         outline: none;
         border: 1px solid rgb(0, 0, 0, 0.3);
+        outline: 0;
       }
       > .password {
         width: 252px;
         height: 35px;
         margin: 5px auto 15px auto;
         border: 1px solid rgb(0, 0, 0, 0.3);
+        outline: 0;
       }
 
       > .sign_div {
@@ -121,47 +123,46 @@ const Login_div = styled.div`
   }
 `;
 
-const Login = ({ closeModal, setIsLogin, handleResponseSuccess}) => {
+const Login = ({ closeModal, setIsLogin, handleResponseSuccess }) => {
   const history = useHistory();
   const [idValue, setIdValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
   const [loginInfo, setLoginInfo] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
   const handleInputValue = (key) => (e) => {
-    console.log('핸들인풋')
+    console.log("핸들인풋");
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
   const handleLogin = () => {
-    const {email, password} = loginInfo
-    if( email === '' ||  password === '' ) {
-      return alert('이메일과 비밀번호를 입력하세요')
+    const { email, password } = loginInfo;
+    if (email === "" || password === "") {
+      return alert("이메일과 비밀번호를 입력하세요");
     } else {
       axios
-      .post(
-        "http://localhost:3001/login",
-        { 
-          email, 
-          password, 
-        },
-        { 
-          withCredentials: true 
-        }
-      )
-      .then((data) => {
-        console.log(data)
-        setIsLogin(true);
-        handleResponseSuccess();
-        closeModal();
-      })
-      .catch((err) => {
-        alert('이메일 혹은 비밀번호를 확인해주세요')
-      })
-    }   
+        .post(
+          `${process.env.REACT_APP_API_URL}/login`,
+          {
+            email,
+            password,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((data) => {
+          console.log(data);
+          setIsLogin(true);
+          handleResponseSuccess();
+          closeModal();
+        })
+        .catch((err) => {
+          alert("이메일 혹은 비밀번호를 확인해주세요");
+        });
+    }
   };
-
 
   return (
     <Login_div>
@@ -184,22 +185,23 @@ const Login = ({ closeModal, setIsLogin, handleResponseSuccess}) => {
             type="text"
             className="loginId"
             placeholder="이메일을 입력해주세요."
-            onChange={
-              handleInputValue('email')
-            }
+            onChange={handleInputValue("email")}
           />
           <input
             className="password"
             type="password"
             placeholder="비밀번호를 입력해주세요."
-            onChange={
-              handleInputValue('password')
-            }
+            onChange={handleInputValue("password")}
           />
-          <div className="sign_div" onClick={()=>{
-            console.log(loginInfo);
-            handleLogin();
-          }}>LOGIN</div>
+          <div
+            className="sign_div"
+            onClick={() => {
+              console.log(loginInfo);
+              handleLogin();
+            }}
+          >
+            LOGIN
+          </div>
           <div className="line"></div>
           <div
             className="join"

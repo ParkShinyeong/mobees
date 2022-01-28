@@ -14,6 +14,6 @@ export GITHUB_CLIENT_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --n
 authbind --deep pm2 start index.js
 
 
-sleep 10s && pm2 status # pm2동작을 확인 - 제대로 작동했는지, codedeploy ->로그 확인
-echo $DATABASE_HOST     # 환경변수에 DATABASE_HOST의 값이 무엇인지 확인
-node check.js           # 만드신 check.js의 로그가 자동화 과정에서는 어떤 console.log를 보여주는지 확인
+# sleep 10s && pm2 status # pm2동작을 확인 - 제대로 작동했는지, codedeploy ->로그 확인
+# echo $DATABASE_HOST     # 환경변수에 DATABASE_HOST의 값이 무엇인지 확인
+# node check.js           # 만드신 check.js의 로그가 자동화 과정에서는 어떤 console.log를 보여주는지 확인
