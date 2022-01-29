@@ -154,7 +154,7 @@ const Comment = styled.div`
     textarea::placeholder {
       color: rgb(0,0,0,0.5);
     }
-  }
+  
   
   .button_box {
     box-sizing: border-box;

@@ -11,7 +11,7 @@ module.exports = {
   sendAccessToken: (res, accessToken) => {
     return res.cookie("jwt", accessToken, {
       // httpOnly: true,
-      domain: "http://ec2-13-125-214-152.ap-northeast-2.compute.amazonaws.com/",
+      domain: "localhost",
       path: "/",
       httpOnly: true,
       secure: true,
