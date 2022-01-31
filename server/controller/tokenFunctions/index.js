@@ -11,7 +11,7 @@ module.exports = {
   sendAccessToken: (res, accessToken) => {
     return res.cookie("jwt", accessToken, {
       // httpOnly: true,
-      domain: "localhost",
+      domain: "mobees.ml",
       path: "/",
       httpOnly: true,
       secure: true,
