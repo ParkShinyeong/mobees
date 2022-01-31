@@ -10,12 +10,12 @@ module.exports = {
   // 쿠키로 access token 전달
   sendAccessToken: (res, accessToken) => {
     return res.cookie("jwt", accessToken, {
+      httpOnly: true,
+      // domain: "mobees.tk",
+      // path: "/",
       // httpOnly: true,
-      domain: "mobees.tk",
-      path: "/",
-      // httpOnly: true,
-      secure: true,
-      sameSite: "None",
+      // secure: true,
+      // sameSite: "None",
     });
   },
   // access token 유효성 확인
