@@ -15,7 +15,7 @@ module.exports = {
       path: "/",
       // httpOnly: true,
       secure: true,
-      sameSite: "none",
+      // sameSite: "none",
     });
   },
   // access token 유효성 확인
