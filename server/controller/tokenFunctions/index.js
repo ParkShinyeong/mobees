@@ -11,11 +11,11 @@ module.exports = {
   sendAccessToken: (res, accessToken) => {
     return res.cookie("jwt", accessToken, {
       httpOnly: true,
-      // domain: "mobees.tk",
+      domain: "mobees.tk",
       // path: "/",
       // httpOnly: true,
-      // secure: true,
-      // sameSite: "None",
+      secure: true,
+      sameSite: "none",
     });
   },
   // access token 유효성 확인
