@@ -12,7 +12,7 @@ module.exports = {
     return res.cookie("jwt", accessToken, {
       httpOnly: true,
       domain: "mobees.tk",
-      // path: "/",
+      path: "/",
       // httpOnly: true,
       secure: true,
       sameSite: "none",
